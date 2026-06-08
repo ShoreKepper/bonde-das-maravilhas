@@ -1,0 +1,147 @@
+.calendar {
+  padding: 0 12px 8px;
+  overflow: hidden;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0 16px;
+}
+
+.navBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: #1a1a2e;
+  border: 1.5px solid #2a2a45;
+  color: #f0ede8;
+  font-size: 22px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+.navBtn:hover { background: #2a2a45; }
+.navBtn:active { transform: scale(0.94); }
+
+.monthLabel {
+  font-family: 'Bangers', cursive;
+  font-size: 26px;
+  letter-spacing: 1px;
+  color: #f0ede8;
+  text-align: center;
+  min-width: 0;
+}
+
+.dayHeaders {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.dayHeader {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 800;
+  color: #606080;
+  text-transform: uppercase;
+  padding: 2px 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.emptyCell {
+  aspect-ratio: 1 / 1.1;
+}
+
+.dayCell {
+  aspect-ratio: 1 / 1.1;
+  background: #13131f;
+  border: 1.5px solid #1a1a2e;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 6px 3px 3px;
+  gap: 2px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.15s, background 0.15s;
+  min-width: 0;
+}
+
+.dayCell:hover {
+  background: #1a1a2e;
+  border-color: #3a3a55;
+}
+
+.dayCell.today {
+  border-color: #a78bfa;
+  background: #1a152e;
+}
+
+.dayCell.today .dayNum {
+  color: #a78bfa;
+  font-weight: 900;
+}
+
+.dayCell.hasEvents {
+  border-color: #3a3a55;
+}
+
+.dayNum {
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
+  color: #f0ede8;
+}
+
+.eventCount {
+  background: #4D96FF;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 900;
+  min-width: 14px;
+  height: 14px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3px;
+}
+
+.miniAvatars {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1px;
+  max-width: 100%;
+}
+
+.miniAvatar {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid;
+  object-fit: cover;
+  object-position: center top;
+  background: #1a1a2e;
+}
+
+.miniMore {
+  font-size: 8px;
+  font-weight: 900;
+  color: #a0a0c0;
+  line-height: 14px;
+}

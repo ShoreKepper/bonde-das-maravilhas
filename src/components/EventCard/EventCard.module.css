@@ -1,0 +1,132 @@
+.card {
+  background: #13131f;
+  border: 1.5px solid #2a2a45;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.status_confirmado {
+  border-color: #4ade8066;
+}
+
+.status_aconteceu {
+  border-color: #facc1566;
+  background: #1a1a0f;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 14px 14px 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.headerLeft { flex: 1; }
+.headerRight { padding-left: 8px; }
+
+.statusBadge {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #a0a0c0;
+  margin-bottom: 4px;
+}
+
+.title {
+  font-size: 17px;
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.2px;
+  color: #f0ede8;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 12px;
+  color: #606080;
+  margin-top: 4px;
+}
+
+.chevron {
+  display: block;
+  font-size: 11px;
+  color: #606080;
+}
+
+.presenceStrip {
+  display: flex;
+  gap: 10px;
+  padding: 12px 14px 10px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.presenceStrip::-webkit-scrollbar { display: none; }
+
+.allIn {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 800;
+  color: #facc15;
+  padding: 2px 0 8px;
+  letter-spacing: 0.2px;
+  animation: pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes pop {
+  0%   { transform: scale(0.7); opacity: 0; }
+  70%  { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.expandedInner {
+  padding: 0 14px 14px;
+  border-top: 1px solid #2a2a45;
+}
+
+.notes {
+  font-size: 13px;
+  color: #a0a0c0;
+  font-style: italic;
+  padding: 10px 0 0;
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.advanceBtn {
+  flex: 1;
+  padding: 10px;
+  background: #1a2e1a;
+  border: 1px solid #4ade8044;
+  border-radius: 10px;
+  color: #4ade80;
+  font-size: 13px;
+  font-weight: 800;
+  font-family: 'Nunito', sans-serif;
+  transition: background 0.15s;
+}
+.advanceBtn:hover { background: #1e3a1e; }
+
+.deleteBtn {
+  padding: 10px 14px;
+  background: #2e1a1a;
+  border: 1px solid #FF3B3044;
+  border-radius: 10px;
+  color: #FF3B30;
+  font-size: 13px;
+  font-weight: 800;
+  font-family: 'Nunito', sans-serif;
+  transition: background 0.15s;
+}
+.deleteBtn:hover { background: #3a1a1a; }

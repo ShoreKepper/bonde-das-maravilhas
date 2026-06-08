@@ -1,0 +1,87 @@
+.app {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 8px;
+  border-bottom: 1px solid #1a1a2e;
+  position: sticky;
+  top: 0;
+  background: #0d0d1a;
+  z-index: 10;
+}
+
+.headerLeft { display: flex; align-items: center; gap: 10px; }
+
+.logo {
+  font-family: 'Bangers', cursive;
+  font-size: 28px;
+  letter-spacing: 1.5px;
+  background: linear-gradient(135deg, #FF2D78, #A78BFA);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.greeting {
+  font-size: 13px;
+  font-weight: 700;
+  color: #a0a0c0;
+}
+
+.main { flex: 1; }
+
+.loading {
+  display: flex;
+  justify-content: center;
+  padding: 60px 0;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #2a2a45;
+  border-top-color: #a78bfa;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  padding: 10px 16px 20px;
+  justify-content: center;
+  border-top: 1px solid #1a1a2e;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #606080;
+}
+
+.legendDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}

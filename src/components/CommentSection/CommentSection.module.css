@@ -1,0 +1,221 @@
+.section {
+  margin-top: 12px;
+  border-top: 1px solid #2a2a45;
+  padding-top: 12px;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 800;
+  color: #606080;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.count {
+  background: #2a2a45;
+  color: #a0a0c0;
+  padding: 1px 6px;
+  border-radius: 20px;
+  font-size: 10px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.commentRow {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid;
+  object-fit: cover;
+  object-position: center top;
+  flex-shrink: 0;
+  background: #1a1a2e;
+}
+
+.bubble {
+  flex: 1;
+  background: #1a1a2e;
+  border: 1px solid #2a2a45;
+  border-radius: 4px 12px 12px 12px;
+  padding: 8px 10px;
+  position: relative;
+}
+
+.bubbleHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 3px;
+}
+
+.authorName {
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.time {
+  font-size: 10px;
+  color: #606080;
+  margin-left: auto;
+}
+
+.deleteBtn {
+  background: none;
+  border: none;
+  color: #606080;
+  font-size: 16px;
+  line-height: 1;
+  padding: 0 2px;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.deleteBtn:hover { color: #FF3B30; }
+
+.bubbleText {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #f0ede8;
+  word-break: break-word;
+}
+
+.reactionsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.reactionPill {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 7px;
+  background: #13131f;
+  border: 1px solid #2a2a45;
+  border-radius: 20px;
+  font-size: 13px;
+  color: #f0ede8;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.reactionPill span { font-size: 11px; font-weight: 700; }
+.reactionPill:hover { border-color: #5555aa; }
+.reactionPill.reacted { border-color: #8888ff; background: #2a2a55; }
+
+.reactionTriggerRow {
+  position: relative;
+  margin-top: 4px;
+}
+
+.reactTrigger {
+  font-size: 10px;
+  font-weight: 700;
+  color: #606080;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: color 0.15s;
+}
+.reactTrigger:hover { color: #a0a0c0; }
+
+.reactionPicker {
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 0;
+  background: #1a1a2e;
+  border: 1px solid #3a3a55;
+  border-radius: 12px;
+  padding: 6px 8px;
+  display: flex;
+  gap: 4px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  z-index: 20;
+}
+
+.reactionOption {
+  font-size: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 6px;
+  transition: transform 0.15s;
+  line-height: 1;
+}
+.reactionOption:hover { transform: scale(1.3); }
+
+.empty {
+  font-size: 12px;
+  color: #606080;
+  text-align: center;
+  padding: 12px 0;
+  font-style: italic;
+}
+
+.inputRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.inputAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid;
+  object-fit: cover;
+  object-position: center top;
+  flex-shrink: 0;
+  background: #1a1a2e;
+}
+
+.input {
+  flex: 1;
+  background: #1a1a2e;
+  border: 1px solid #2a2a45;
+  border-radius: 20px;
+  padding: 8px 14px;
+  font-size: 13px;
+  color: #f0ede8;
+  transition: border-color 0.15s;
+}
+.input::placeholder { color: #606080; }
+.input:focus { border-color: #5555aa; }
+
+.sendBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  color: #0d0d1a;
+  font-size: 16px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.sendBtn:hover:not(:disabled) { opacity: 0.85; transform: scale(1.05); }
+.sendBtn:disabled { opacity: 0.4; cursor: not-allowed; }

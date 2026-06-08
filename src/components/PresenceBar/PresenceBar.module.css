@@ -1,0 +1,33 @@
+.bar {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.slot {
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+
+.confirmed {
+  border: 1.5px solid var(--color);
+  box-shadow: 0 0 6px var(--glow);
+}
+
+.empty {
+  border: 1.5px dashed var(--color, #444);
+  opacity: 0.3;
+}
+
+.avatarImg {
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.emptyDot {
+  background: transparent;
+  border-radius: 50%;
+}
