@@ -1,16 +1,15 @@
+/* ── Mobile base ── */
 .app {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  max-width: 480px;
-  margin: 0 auto;
 }
 
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 16px 8px;
+  padding: 14px 20px 10px;
   border-bottom: 1px solid #1a1a2e;
   position: sticky;
   top: 0;
@@ -40,6 +39,43 @@
   font-size: 13px;
   font-weight: 700;
   color: #a0a0c0;
+}
+
+.switchBtn {
+  background: #1a1a2e;
+  border: 1.5px solid #2a2a45;
+  color: #a0a0c0;
+  font-size: 11px;
+  font-weight: 800;
+  font-family: 'Nunito', sans-serif;
+  padding: 5px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.switchBtn:hover {
+  border-color: #A78BFA;
+  color: #A78BFA;
+}
+
+/* ── Desktop layout ── */
+.desktopLayout {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.sidebar {
+  display: none;
+}
+
+.mainArea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 
 .main { flex: 1; }
@@ -84,4 +120,137 @@
   height: 8px;
   border-radius: 50%;
   flex-shrink: 0;
+}
+
+/* ── Desktop (768px+) ── */
+@media (min-width: 768px) {
+  .app {
+    max-width: 100%;
+  }
+
+  .header {
+    padding: 14px 32px 10px;
+  }
+
+  .logo {
+    font-size: 34px;
+  }
+
+  .greeting {
+    font-size: 14px;
+  }
+
+  .desktopLayout {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 24px 32px;
+    gap: 24px;
+    align-items: flex-start;
+  }
+
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 220px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 80px;
+  }
+
+  .sidebarTitle {
+    font-family: 'Bangers', cursive;
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: #606080;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .sidebarMember {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: #13131f;
+    border: 1.5px solid #1a1a2e;
+    border-radius: 12px;
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  .sidebarMember.active {
+    border-color: var(--color);
+    background: color-mix(in srgb, var(--color) 8%, #13131f);
+    box-shadow: 0 0 12px color-mix(in srgb, var(--color) 20%, transparent);
+  }
+
+  .sidebarAvatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--color);
+    object-fit: cover;
+    object-position: center top;
+    flex-shrink: 0;
+  }
+
+  .sidebarInfo {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .sidebarName {
+    font-size: 13px;
+    font-weight: 800;
+    color: #f0ede8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sidebarChar {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--color);
+  }
+
+  .sidebarPresenceDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color);
+    margin-left: auto;
+    flex-shrink: 0;
+    opacity: 0;
+  }
+  .sidebarMember.active .sidebarPresenceDot {
+    opacity: 1;
+    box-shadow: 0 0 6px var(--color);
+  }
+
+  .mainArea {
+    flex: 1;
+    background: #0f0f1e;
+    border: 1px solid #1a1a2e;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .legend {
+    padding: 12px 24px 16px;
+  }
+}
+
+/* ── Wide desktop (1024px+) ── */
+@media (min-width: 1024px) {
+  .desktopLayout {
+    padding: 28px 48px;
+    gap: 32px;
+  }
+
+  .sidebar {
+    width: 240px;
+  }
 }
