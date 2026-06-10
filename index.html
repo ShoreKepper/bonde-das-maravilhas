@@ -2,17 +2,48 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/bonde-das-maravilhas/avatars/patolino.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- PWA -->
+    <link rel="manifest" href="/bonde-das-maravilhas/manifest.json" />
     <meta name="theme-color" content="#0d0d1a" />
-    <title>Bonde das Maravilhas 🎉</title>
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="BdM 🎉" />
+
+    <!-- Icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/bonde-das-maravilhas/favicon-32x32.png" />
+    <link rel="apple-touch-icon" href="/bonde-das-maravilhas/apple-touch-icon.png" />
+
+    <!-- SEO / Share -->
+    <meta name="description" content="Agenda compartilhada do Bonde das Maravilhas 🎉" />
+    <meta property="og:title" content="Bonde das Maravilhas" />
+    <meta property="og:description" content="Agenda compartilhada do grupo" />
+    <meta property="og:image" content="/bonde-das-maravilhas/icon-512x512.png" />
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <title>Bonde das Maravilhas 🎉</title>
     <script type="module" crossorigin src="/bonde-das-maravilhas/assets/index-DcQYkPfl.js"></script>
     <link rel="stylesheet" crossorigin href="/bonde-das-maravilhas/assets/index-BY4cUTpI.css">
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- Registra o Service Worker -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker
+            .register('/bonde-das-maravilhas/sw.js')
+            .then(() => console.log('✅ SW registrado'))
+            .catch((e) => console.log('SW erro:', e))
+        })
+      }
+    </script>
   </body>
 </html>
