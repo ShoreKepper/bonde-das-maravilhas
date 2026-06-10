@@ -145,3 +145,41 @@
   color: #a0a0c0;
   line-height: 14px;
 }
+
+/* ── Desktop ── */
+@media (min-width: 768px) {
+  .calendar {
+    padding: 20px 24px 16px;
+  }
+
+  .monthLabel {
+    font-size: 32px;
+  }
+
+  .navBtn {
+    width: 44px;
+    height: 44px;
+    font-size: 24px;
+  }
+
+  .dayCell {
+    border-radius: 14px;
+    padding: 8px 4px 4px;
+    min-height: 72px;
+  }
+
+  .dayNum {
+    font-size: 15px;
+  }
+
+  .miniAvatar {
+    width: 18px;
+    height: 18px;
+  }
+
+  .eventCount {
+    font-size: 10px;
+    min-width: 16px;
+    height: 16px;
+  }
+}
