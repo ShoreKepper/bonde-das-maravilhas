@@ -15,24 +15,32 @@ import styles from './App.module.css'
 
 export default function App() {
   const today = new Date()
-  const [year, setYear]       = useState(today.getFullYear())
-  const [month, setMonth]     = useState(today.getMonth())
+  const [year, setYear]               = useState(today.getFullYear())
+  const [month, setMonth]             = useState(today.getMonth())
   const [selectedDay, setSelectedDay] = useState(null)
   const [showAdd, setShowAdd]         = useState(false)
+  const [choosingMember, setChoosingMember] = useState(false)
 
   const { currentMember, selectMember, logout } = useMember()
   const { loading, getEventsForDay, daysWithEvents, fetchEvents } = useEvents(year, month)
 
   const handleMonthChange = (y, m) => { setYear(y); setMonth(m) }
-
   const dayEvents = selectedDay ? getEventsForDay(selectedDay) : []
+
+  const handleSelectMember = (member) => {
+    selectMember(member)
+    setChoosingMember(false)
+  }
+
+  const showMemberSelect = !currentMember || choosingMember
 
   return (
     <div className={styles.app}>
-      {/* Member Select */}
+
+      {/* Member Select overlay */}
       <AnimatePresence>
-        {!currentMember && (
-          <MemberSelectModal onSelect={selectMember} />
+        {showMemberSelect && (
+          <MemberSelectModal onSelect={handleSelectMember} />
         )}
       </AnimatePresence>
 
@@ -46,41 +54,80 @@ export default function App() {
             <span className={styles.greeting}>
               Oi, {currentMember.name.split(' ')[0]}!
             </span>
+            <button
+              className={styles.switchBtn}
+              onClick={() => setChoosingMember(true)}
+              title="Trocar perfil"
+            >
+              Trocar perfil
+            </button>
             <MemberAvatar
               member={currentMember}
               size={38}
-              onClick={logout}
               selected
             />
           </div>
         )}
       </header>
 
-      {/* Calendar */}
-      <main className={styles.main}>
-        {loading ? (
-          <div className={styles.loading}>
-            <div className={styles.spinner} />
-          </div>
-        ) : (
-          <Calendar
-            year={year}
-            month={month}
-            onMonthChange={handleMonthChange}
-            daysWithEvents={daysWithEvents}
-            onDayClick={(day) => setSelectedDay(day)}
-          />
-        )}
-      </main>
+      {/* Desktop layout wrapper */}
+      <div className={styles.desktopLayout}>
 
-      {/* Legend */}
-      <div className={styles.legend}>
-        {MEMBERS.map((m) => (
-          <div key={m.id} className={styles.legendItem}>
-            <div className={styles.legendDot} style={{ background: m.color }} />
-            <span>{m.name.split(' ')[0]}</span>
+        {/* Sidebar — só aparece no desktop */}
+        <aside className={styles.sidebar}>
+          <p className={styles.sidebarTitle}>Membros</p>
+          {MEMBERS.map((m) => {
+            const isMe = currentMember?.id === m.id
+            return (
+              <div
+                key={m.id}
+                className={`${styles.sidebarMember} ${isMe ? styles.active : ''}`}
+                style={{ '--color': m.color }}
+              >
+                <img
+                  src={m.avatar}
+                  alt={m.name}
+                  className={styles.sidebarAvatar}
+                  style={{ borderColor: m.color }}
+                />
+                <div className={styles.sidebarInfo}>
+                  <span className={styles.sidebarName}>{m.name}</span>
+                  <span className={styles.sidebarChar}>{m.character}</span>
+                </div>
+                <div className={styles.sidebarPresenceDot} />
+              </div>
+            )
+          })}
+        </aside>
+
+        {/* Main calendar area */}
+        <div className={styles.mainArea}>
+          <main className={styles.main}>
+            {loading ? (
+              <div className={styles.loading}>
+                <div className={styles.spinner} />
+              </div>
+            ) : (
+              <Calendar
+                year={year}
+                month={month}
+                onMonthChange={handleMonthChange}
+                daysWithEvents={daysWithEvents}
+                onDayClick={(day) => setSelectedDay(day)}
+              />
+            )}
+          </main>
+
+          {/* Legend */}
+          <div className={styles.legend}>
+            {MEMBERS.map((m) => (
+              <div key={m.id} className={styles.legendItem}>
+                <div className={styles.legendDot} style={{ background: m.color }} />
+                <span>{m.name.split(' ')[0]}</span>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
 
       {/* Day Modal */}
