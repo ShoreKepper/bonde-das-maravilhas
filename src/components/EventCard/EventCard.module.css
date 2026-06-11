@@ -130,3 +130,98 @@
   transition: background 0.15s;
 }
 .deleteBtn:hover { background: #3a1a1a; }
+
+/* ── Novos status ── */
+.status_cancelado {
+  border-color: #FF3B3044;
+  opacity: 0.75;
+}
+
+.badge_confirmado { color: #4ade80; }
+.badge_cancelado  { color: #FF3B30; }
+.badge_aconteceu  { color: #facc15; }
+.badge_ideia      { color: #a0a0c0; }
+
+.titleCanceled {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.canceledBanner {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #FF3B30;
+  padding: 6px 0 10px;
+  opacity: 0.8;
+}
+
+/* ── Action buttons novos ── */
+.cancelBtn {
+  flex: 1;
+  padding: 10px;
+  background: #2e1a1a;
+  border: 1px solid #FF3B3044;
+  border-radius: 10px;
+  color: #FF3B30;
+  font-size: 13px;
+  font-weight: 800;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.cancelBtn:hover { background: #3a1a1a; }
+
+.reactivateBtn {
+  flex: 1;
+  padding: 10px;
+  background: #1a2a1a;
+  border: 1px solid #4ade8044;
+  border-radius: 10px;
+  color: #4ade80;
+  font-size: 13px;
+  font-weight: 800;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.reactivateBtn:hover { background: #1e3a1e; }
+
+.confirmCancel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  background: #2e1a1a;
+  border: 1px solid #FF3B3066;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: #FF3B30;
+  font-weight: 700;
+}
+
+.confirmYes {
+  padding: 5px 10px;
+  background: #FF3B30;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.confirmNo {
+  padding: 5px 10px;
+  background: #1a1a2e;
+  border: 1px solid #3a3a55;
+  border-radius: 6px;
+  color: #a0a0c0;
+  font-size: 12px;
+  font-weight: 800;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+}
