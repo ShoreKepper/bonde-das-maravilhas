@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MEMBERS } from '../../data/members'
-import { getMembersWithCustomNames } from '../../hooks/useMember'
+
 import { togglePresence, updateEventStatus, deleteEvent } from '../../hooks/useEvents'
 import MemberAvatar from '../MemberAvatar/MemberAvatar'
 import CommentSection from '../CommentSection/CommentSection'
@@ -20,7 +20,7 @@ export default function EventCard({ event, currentMember }) {
   const [bouncingMember, setBouncingMember] = useState(null)
   const [confirmingCancel, setConfirmingCancel] = useState(false)
 
-  const members = getMembersWithCustomNames()
+  const members = MEMBERS
   const confirmedIds = (event.presences || []).map((p) => p.member_id)
   const allConfirmed = confirmedIds.length === MEMBERS.length
   const isCreator = currentMember?.id === event.created_by
