@@ -1,152 +1,65 @@
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { MEMBERS, getMemberById } from '../../data/members'
-import { togglePresence, updateEventStatus, deleteEvent } from '../../hooks/useEvents'
-import MemberAvatar from '../MemberAvatar/MemberAvatar'
-import CommentSection from '../CommentSection/CommentSection'
-import styles from './EventCard.module.css'
-import confetti from 'canvas-confetti'
+import { useState, useEffect } from 'react'
+import { MEMBERS } from '../data/members'
 
-const STATUS_LABELS = {
-  ideia:      { label: '💡 Ideia',      next: 'confirmado' },
-  confirmado: { label: '✅ Confirmado', next: 'aconteceu' },
-  aconteceu:  { label: '🎉 Aconteceu!', next: null },
+const NAMES_KEY = 'bonde_custom_names'
+
+// Carrega nomes customizados do localStorage
+export function getCustomNames() {
+  try {
+    const saved = localStorage.getItem(NAMES_KEY)
+    return saved ? JSON.parse(saved) : {}
+  } catch { return {} }
 }
 
-export default function EventCard({ event, currentMember }) {
-  const [expanded, setExpanded] = useState(false)
-  const [bouncingMember, setBouncingMember] = useState(null)
+// Aplica nomes customizados sobre os membros base
+export function getMembersWithCustomNames() {
+  const custom = getCustomNames()
+  return MEMBERS.map((m) => ({
+    ...m,
+    name: custom[m.id] || m.name,
+  }))
+}
 
-  const confirmedIds = (event.presences || []).map((p) => p.member_id)
-  const allConfirmed = confirmedIds.length === MEMBERS.length
+export function useMember() {
+  const [currentMember, setCurrentMember] = useState(null)
+  const [customNames, setCustomNames] = useState(getCustomNames)
 
-  const handlePresence = async (member) => {
-    if (!currentMember) return
-    // Só pode marcar/desmarcar a si mesmo
-    if (member.id !== currentMember.id) return
+  useEffect(() => {
+    const saved = localStorage.getItem('bonde_member')
+    if (saved) {
+      const members = getMembersWithCustomNames()
+      const found = members.find((m) => m.id === saved)
+      if (found) setCurrentMember(found)
+    }
+  }, [])
 
-    const isPresent = confirmedIds.includes(member.id)
-    await togglePresence(event.id, member.id, isPresent)
+  const selectMember = (member) => {
+    setCurrentMember(member)
+    localStorage.setItem('bonde_member', member.id)
+  }
 
-    if (!isPresent) {
-      // Animação de bounce ao confirmar
-      setBouncingMember(member.id)
-      setTimeout(() => setBouncingMember(null), 600)
+  const logout = () => {
+    setCurrentMember(null)
+    localStorage.removeItem('bonde_member')
+  }
 
-      // Confetti se todos confirmaram após essa ação
-      const newCount = confirmedIds.length + 1
-      if (newCount === MEMBERS.length) {
-        confetti({
-          particleCount: 120,
-          spread: 80,
-          origin: { y: 0.6 },
-          colors: MEMBERS.map((m) => m.color),
-        })
-      }
+  const updateName = (memberId, newName) => {
+    const updated = { ...customNames, [memberId]: newName.trim() || undefined }
+    // Remove chaves vazias
+    Object.keys(updated).forEach(k => !updated[k] && delete updated[k])
+    setCustomNames(updated)
+    localStorage.setItem(NAMES_KEY, JSON.stringify(updated))
+    // Atualiza membro atual se for ele mesmo
+    if (currentMember?.id === memberId) {
+      setCurrentMember(prev => ({ ...prev, name: newName.trim() || prev.name }))
     }
   }
 
-  const handleAdvanceStatus = async () => {
-    const next = STATUS_LABELS[event.status]?.next
-    if (next) await updateEventStatus(event.id, next)
-  }
+  // Membros com nomes customizados aplicados
+  const membersWithNames = MEMBERS.map((m) => ({
+    ...m,
+    name: customNames[m.id] || m.name,
+  }))
 
-  const timeStr = event.time
-    ? event.time.slice(0, 5)
-    : null
-
-  return (
-    <motion.div
-      className={`${styles.card} ${styles[`status_${event.status}`]}`}
-      layout
-      initial={{ opacity: 0, y: 12, scale: 0.97 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-    >
-      {/* Header */}
-      <div className={styles.header} onClick={() => setExpanded((v) => !v)}>
-        <div className={styles.headerLeft}>
-          <div className={styles.statusBadge}>
-            {STATUS_LABELS[event.status]?.label}
-          </div>
-          <h3 className={styles.title}>{event.title}</h3>
-          <div className={styles.meta}>
-            {timeStr && <span>🕐 {timeStr}</span>}
-            {event.location && <span>📍 {event.location}</span>}
-          </div>
-        </div>
-        <div className={styles.headerRight}>
-          <motion.span
-            className={styles.chevron}
-            animate={{ rotate: expanded ? 180 : 0 }}
-            transition={{ duration: 0.2 }}
-          >▼</motion.span>
-        </div>
-      </div>
-
-      {/* Presence strip — always visible */}
-      <div className={styles.presenceStrip}>
-        {MEMBERS.map((member) => {
-          const isPresent = confirmedIds.includes(member.id)
-          const isMe = currentMember?.id === member.id
-          return (
-            <MemberAvatar
-              key={member.id}
-              member={member}
-              size={36}
-              selected={isPresent}
-              dimmed={!isPresent && !isMe}
-              bounce={bouncingMember === member.id}
-              onClick={() => handlePresence(member)}
-              showName
-            />
-          )
-        })}
-      </div>
-
-      {allConfirmed && (
-        <div className={styles.allIn}>🎊 Todo mundo vai!!</div>
-      )}
-
-      {/* Expanded content */}
-      <AnimatePresence initial={false}>
-        {expanded && (
-          <motion.div
-            key="expanded"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: 'easeInOut' }}
-            style={{ overflow: 'hidden' }}
-          >
-            <div className={styles.expandedInner}>
-              {event.notes && (
-                <p className={styles.notes}>{event.notes}</p>
-              )}
-
-              <CommentSection event={event} currentMember={currentMember} />
-
-              {/* Actions */}
-              <div className={styles.actions}>
-                {STATUS_LABELS[event.status]?.next && (
-                  <button className={styles.advanceBtn} onClick={handleAdvanceStatus}>
-                    {event.status === 'ideia' ? '✅ Confirmar rolê' : '🎉 Marcar como aconteceu'}
-                  </button>
-                )}
-                {currentMember?.id === event.created_by && (
-                  <button
-                    className={styles.deleteBtn}
-                    onClick={() => deleteEvent(event.id)}
-                  >
-                    🗑 Apagar
-                  </button>
-                )}
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
-  )
+  return { currentMember, selectMember, logout, updateName, membersWithNames, customNames }
 }
