@@ -27,7 +27,7 @@ export function useMember() {
   useEffect(() => {
     const saved = localStorage.getItem('bonde_member')
     if (saved) {
-      const members = getMembersWithCustomNames()
+      const members = MEMBERS
       const found = members.find((m) => m.id === saved)
       if (found) setCurrentMember(found)
     }
