@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MEMBERS } from '../../data/members'
+import { getCustomNames } from '../../hooks/useMember'
 import { createEvent } from '../../hooks/useEvents'
 import EventCard from '../EventCard/EventCard'
 import MemberAvatar from '../MemberAvatar/MemberAvatar'
@@ -40,7 +41,36 @@ function Sheet({ children, onClose, tall = false }) {
 }
 
 // ─── Member Select Screen ──────────────────────────────────────
-export function MemberSelectModal({ onSelect }) {
+export function MemberSelectModal({ onSelect, onUpdateName }) {
+  const [editingId, setEditingId] = useState(null)
+  const [editValue, setEditValue] = useState('')
+  const [customNames, setCustomNames] = useState(getCustomNames)
+
+  const getDisplayName = (m) => customNames[m.id] || m.name
+
+  const startEdit = (e, m) => {
+    e.stopPropagation()
+    setEditingId(m.id)
+    setEditValue(getDisplayName(m))
+  }
+
+  const saveEdit = (m) => {
+    const trimmed = editValue.trim()
+    if (trimmed) {
+      const updated = { ...customNames, [m.id]: trimmed }
+      setCustomNames(updated)
+      localStorage.setItem('bonde_custom_names', JSON.stringify(updated))
+      if (onUpdateName) onUpdateName(m.id, trimmed)
+    }
+    setEditingId(null)
+  }
+
+  const handleSelect = (m) => {
+    if (editingId) return
+    const memberWithName = { ...m, name: getDisplayName(m) }
+    onSelect(memberWithName)
+  }
+
   return (
     <motion.div
       className={styles.memberScreen}
@@ -49,14 +79,15 @@ export function MemberSelectModal({ onSelect }) {
     >
       <div className={styles.memberScreenInner}>
         <h1 className={styles.bondTitle}>Bonde das<br />Maravilhas</h1>
-        <p className={styles.bondSub}>Quem é você?</p>
+        <p className={styles.bondSub}>Quem é você? <span className={styles.bondHint}>✏️ segura pra editar o nome</span></p>
         <div className={styles.memberGrid}>
           {MEMBERS.map((m, i) => (
-            <motion.button
+            <motion.div
               key={m.id}
               className={styles.memberOption}
               style={{ '--color': m.color, '--glow': m.colorGlow }}
-              onClick={() => onSelect(m)}
+              onClick={() => handleSelect(m)}
+              onContextMenu={(e) => { e.preventDefault(); startEdit(e, m) }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.07, type: 'spring', stiffness: 400 }}
@@ -66,9 +97,36 @@ export function MemberSelectModal({ onSelect }) {
               <div className={styles.memberOptionAvatar}>
                 <img src={m.avatar} alt={m.character} className={styles.memberOptionImg} />
               </div>
-              <span className={styles.memberOptionName}>{m.name.split(' ')[0]}</span>
-              <span className={styles.memberOptionChar}>{m.character}</span>
-            </motion.button>
+
+              {editingId === m.id ? (
+                <input
+                  className={styles.nameInput}
+                  value={editValue}
+                  onChange={(e) => setEditValue(e.target.value)}
+                  onBlur={() => saveEdit(m)}
+                  onKeyDown={(e) => {
+                    e.stopPropagation()
+                    if (e.key === 'Enter') saveEdit(m)
+                    if (e.key === 'Escape') setEditingId(null)
+                  }}
+                  onClick={(e) => e.stopPropagation()}
+                  autoFocus
+                  maxLength={20}
+                />
+              ) : (
+                <>
+                  <span className={styles.memberOptionName}>
+                    {getDisplayName(m).split(' ')[0]}
+                  </span>
+                  <span className={styles.memberOptionChar}>{m.character}</span>
+                  <button
+                    className={styles.editNameBtn}
+                    onClick={(e) => startEdit(e, m)}
+                    title="Editar nome"
+                  >✏️</button>
+                </>
+              )}
+            </motion.div>
           ))}
         </div>
       </div>
