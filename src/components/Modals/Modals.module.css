@@ -280,3 +280,47 @@
   font-weight: 700;
   color: var(--color);
 }
+
+/* ── Name editing ── */
+.bondHint {
+  font-size: 11px;
+  color: #3a3a55;
+  font-weight: 600;
+  display: block;
+  margin-top: 2px;
+}
+
+.nameInput {
+  width: 100%;
+  background: #0d0d1a;
+  border: 1.5px solid var(--color);
+  border-radius: 6px;
+  padding: 4px 6px;
+  font-size: 13px;
+  font-weight: 800;
+  color: #f0ede8;
+  font-family: 'Nunito', sans-serif;
+  text-align: center;
+  outline: none;
+}
+
+.editNameBtn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: none;
+  border: none;
+  font-size: 11px;
+  opacity: 0;
+  cursor: pointer;
+  padding: 2px;
+  transition: opacity 0.15s;
+}
+
+.memberOption {
+  position: relative;
+}
+
+.memberOption:hover .editNameBtn {
+  opacity: 1;
+}
