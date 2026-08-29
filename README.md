@@ -5,7 +5,7 @@ Agenda compartilhada do grupo para organizar e programar rolês.
 ## Stack
 - **React + Vite** — frontend
 - **Framer Motion** — animações
-- **Supabase** — banco de dados + realtime
+- **Supabase** — banco de dados + realtime 
 - **GitHub Pages** — hospedagem
 
 ---
